@@ -3,7 +3,7 @@ import BubblePlayer from "./BubblePlayer";
 import BubbleDealer from "./BubbleDealer";
 import { drawCard } from "../utils/api";
 
-function Display({ name, active }) {
+function Display({ name }) {
   const { deckId } = useLoaderData();
 
   const handleHit = async () => {
@@ -18,7 +18,7 @@ function Display({ name, active }) {
   return (
     <div
       className={`md:w-1/3 md:py-20 md:rounded-3xl md:shadow-lg ${
-        active ? "bg-zinc-300" : "bg-zinc-200"
+        isPlayer() ? "bg-zinc-300" : "bg-zinc-200"
       }`}
     >
       {isPlayer() ? <BubblePlayer /> : <BubbleDealer />}
