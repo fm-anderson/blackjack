@@ -2,7 +2,7 @@ function GameBar() {
   return (
     <header className="grid grid-cols-1 bg-gray-200">
       <div className="navbar justify-center">
-        <h3 className="btn btn-block normal-case md:btn-wide shadow-md text-2xl font-semibold">
+        <h3 className="btn btn-block normal-case md:btn-wide shadow-md text-2xl font-semibold pointer-events-none">
           Wallet: {"$200"}
         </h3>
       </div>

@@ -1,7 +1,16 @@
+import { useLoaderData } from "react-router-dom";
 import BubblePlayer from "./BubblePlayer";
 import BubbleDealer from "./BubbleDealer";
+import { drawCard } from "../utils/api";
 
 function Display({ name, active }) {
+  const { deckId } = useLoaderData();
+
+  const handleHit = async () => {
+    const res = await drawCard(deckId, 1);
+    return res.cards;
+  };
+
   const isPlayer = () => {
     return name === "Player";
   };
@@ -27,7 +36,9 @@ function Display({ name, active }) {
       <div className="flex justify-center gap-4 pb-5">
         {isPlayer() && (
           <>
-            <button className="btn shadow-md w-1/3">HIT</button>
+            <button className="btn shadow-md w-1/3" onClick={handleHit}>
+              HIT
+            </button>
             <button className="btn shadow-md w-1/3">STAND</button>
           </>
         )}

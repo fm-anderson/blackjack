@@ -1,4 +1,15 @@
+import { useLoaderData } from "react-router-dom";
+import { reshuffleDeck } from "../utils/api";
+
 function Modal() {
+  const { deckId } = useLoaderData();
+
+  const handleRestart = async () => {
+    const reshuffled = await reshuffleDeck(deckId);
+    console.log(reshuffled);
+    return reshuffled;
+  };
+
   return (
     <>
       {/* The button to open modal */}
@@ -15,6 +26,9 @@ function Modal() {
           <div className="modal-action">
             <label htmlFor="my_modal_6" className="btn">
               Close!
+            </label>
+            <label htmlFor="my_modal_6" className="btn" onClick={handleRestart}>
+              Restart Game
             </label>
           </div>
         </div>
