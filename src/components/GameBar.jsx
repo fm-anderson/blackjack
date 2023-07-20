@@ -17,7 +17,7 @@ function GameBar() {
         />
         <button className="btn w-1/5 md:w-1/12 text-lg">$10</button>
         <button className="btn w-1/5 md:w-1/12 text-lg">$20</button>
-        <button className="btn w-1/5 md:w-1/12 text-lg">$60</button>
+        <button className="btn w-1/5 md:w-1/12 text-lg">$50</button>
       </div>
     </header>
   );
