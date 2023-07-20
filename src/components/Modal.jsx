@@ -1,5 +1,3 @@
-import React from "react";
-
 function Modal() {
   return (
     <>
@@ -10,7 +8,7 @@ function Modal() {
 
       {/* Put this part before </body> tag */}
       <input type="checkbox" id="my_modal_6" className="modal-toggle" />
-      <div className="modal">
+      <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Hello!</h3>
           <p className="py-4">This modal works with a hidden checkbox!</p>

@@ -3,7 +3,7 @@ import linkedinLogo from "../images/linkedin-logo.svg";
 
 function Footer() {
   return (
-    <footer className="footer items-center p-4 bg-base-100">
+    <footer className="footer items-center p-4 bg-gray-200">
       <p className="text-sm justify-self-center md:justify-self-start lg:text-md">
         Copyright © {new Date().getFullYear()} - Anderson Marques
       </p>
