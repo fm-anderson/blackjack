@@ -1,16 +1,20 @@
+import { useAtom } from "jotai";
 import { useState } from "react";
+import { betAtom, bettingAtom, playerAtom } from "../App";
 
-function GameBar({ player, setPlayer }) {
-  const [bet, setBet] = useState(0);
-  const [betting, setBetting] = useState(false);
+function GameBar() {
+  const [bet, setBet] = useAtom(betAtom);
+  const [betting, setBetting] = useAtom(bettingAtom);
+  // const [betting, setBetting] = useState(false);
+  const [player, setPlayer] = useAtom(playerAtom);
 
   const handleBetIncrease = (amount) => {
     if (player.wallet <= 0) {
       return;
     } else {
       const value = player.wallet - amount;
-      setPlayer((prevState) => ({ ...prevState, wallet: value }));
       setBet((prevState) => prevState + amount);
+      setPlayer((prevState) => ({ ...prevState, wallet: value }));
     }
   };
 
@@ -35,6 +39,7 @@ function GameBar({ player, setPlayer }) {
           <button
             className="btn btn-outline hover:btn-success shadow-md text-lg"
             onClick={() => setBetting(true)}
+            disabled={bet === 0}
           >
             Bet ${bet}
           </button>
@@ -59,9 +64,12 @@ function GameBar({ player, setPlayer }) {
         </div>
       ) : (
         <div className="navbar flex flex-row justify-center gap-3">
-          <h3 className="btn btn-block md:btn-wide shadow-md text-xl normal-case font-semibold pointer-events-none">
+          <button
+            className="btn btn-block md:btn-wide shadow-md text-xl normal-case font-semibold"
+            onClick={() => setBetting(false)}
+          >
             Betting: ${bet}
-          </h3>
+          </button>
         </div>
       )}
     </header>
