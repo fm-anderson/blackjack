@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { playerAtom } from "../App";
+import { playerAtom } from "../utils/atoms";
 
 function BubblePlayer() {
   const [player, setPlayer] = useAtom(playerAtom);

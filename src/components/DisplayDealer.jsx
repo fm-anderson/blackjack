@@ -1,12 +1,12 @@
+import { useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
+import { useAtom } from "jotai";
 import BubbleDealer from "./BubbleDealer";
 import { drawCard } from "../utils/api";
 import { updateScore } from "../utils/helpers";
-import { useAtom } from "jotai";
-import { dealerAtom } from "../App";
-import { useEffect } from "react";
+import { dealerAtom } from "../utils/atoms";
 
-function Display() {
+function DisplayDealer() {
   const { deckId } = useLoaderData();
   const [dealer, setDealer] = useAtom(dealerAtom);
 
@@ -58,4 +58,4 @@ function Display() {
   );
 }
 
-export default Display;
+export default DisplayDealer;

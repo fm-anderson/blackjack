@@ -1,21 +1,21 @@
 import { useAtom } from "jotai";
-import { useState } from "react";
-import { betAtom, bettingAtom, playerAtom } from "../App";
+import BetButton from "./BetButton";
+import { betAtom, bettingAtom, playerAtom } from "../utils/atoms";
+import { randomKey } from "../utils/helpers";
 
 function GameBar() {
-  const [bet, setBet] = useAtom(betAtom);
   const [betting, setBetting] = useAtom(bettingAtom);
-  // const [betting, setBetting] = useState(false);
   const [player, setPlayer] = useAtom(playerAtom);
+  const [bet, setBet] = useAtom(betAtom);
+  const betAmounts = [10, 20, 50];
 
   const handleBetIncrease = (amount) => {
-    if (player.wallet <= 0) {
+    if (player.wallet <= 0 || player.wallet < amount) {
       return;
-    } else {
-      const value = player.wallet - amount;
-      setBet((prevState) => prevState + amount);
-      setPlayer((prevState) => ({ ...prevState, wallet: value }));
     }
+    const value = player.wallet - amount;
+    setBet((prevState) => prevState + amount);
+    setPlayer((prevState) => ({ ...prevState, wallet: value }));
   };
 
   return (
@@ -43,24 +43,14 @@ function GameBar() {
           >
             Bet ${bet}
           </button>
-          <button
-            className="btn shadow-md w-1/5 md:w-1/12 text-lg"
-            onClick={() => handleBetIncrease(10)}
-          >
-            $10
-          </button>
-          <button
-            className="btn shadow-md w-1/5 md:w-1/12 text-lg"
-            onClick={() => handleBetIncrease(20)}
-          >
-            $20
-          </button>
-          <button
-            className="btn shadow-md w-1/5 md:w-1/12 text-lg"
-            onClick={() => handleBetIncrease(50)}
-          >
-            $50
-          </button>
+          {betAmounts.map((amount) => (
+            <BetButton
+              key={randomKey(8)}
+              amount={amount}
+              handleBetIncrease={handleBetIncrease}
+              disabled={player.wallet < amount}
+            />
+          ))}
         </div>
       ) : (
         <div className="navbar flex flex-row justify-center gap-3">

@@ -18,11 +18,6 @@ export const parseCardValue = (value) => {
     case "JACK": {
       return 10;
     }
-    case "ACE": {
-      // setIsAce(true);
-      console.log("ACE case. No logic yet");
-      return 1;
-    }
     default: {
       return parseInt(value);
     }

@@ -1,12 +1,12 @@
+import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import { useAtom } from "jotai";
 import BubblePlayer from "./BubblePlayer";
 import { drawCard } from "../utils/api";
 import { randomKey, updateScore } from "../utils/helpers";
-import { useAtom } from "jotai";
-import { bettingAtom, playerAtom } from "../App";
-import { useEffect, useState } from "react";
+import { bettingAtom, playerAtom } from "../utils/atoms";
 
-function Display() {
+function DisplayPlayer() {
   const { deckId } = useLoaderData();
   const [start, setStart] = useState(false);
   const [player, setPlayer] = useAtom(playerAtom);
@@ -14,17 +14,17 @@ function Display() {
 
   const firstDraw = async () => {
     const res = await drawCard(deckId, 2);
+
     res.cards.forEach((item) => {
       setPlayer((prevState) => ({
         ...prevState,
         cards: [...prevState.cards, item],
       }));
     });
-
     const newScore = updateScore(res.cards);
     setPlayer((prevState) => ({ ...prevState, score: newScore }));
-
     setStart(true);
+
     return res.cards;
   };
 
@@ -34,7 +34,6 @@ function Display() {
     setPlayer((prevState) => {
       const newCards = [...prevState.cards, card];
       const newScore = updateScore(newCards);
-
       return {
         ...prevState,
         cards: newCards,
@@ -102,4 +101,4 @@ function Display() {
   );
 }
 
-export default Display;
+export default DisplayPlayer;
