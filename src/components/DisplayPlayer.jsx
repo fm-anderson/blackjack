@@ -6,6 +6,8 @@ import Card from "./Card";
 import { cardBack, drawCard } from "../utils/api";
 import { randomKey, updateScore } from "../utils/helpers";
 import { bettingAtom, playerAtom } from "../utils/atoms";
+import PlayButton from "./PlayButton";
+import PlayingButtons from "./PlayingButtons";
 
 function DisplayPlayer() {
   const { deckId } = useLoaderData();
@@ -70,20 +72,9 @@ function DisplayPlayer() {
 
       <div className="flex justify-center gap-4 pb-5">
         {start ? (
-          <>
-            <button className="btn shadow-md w-1/3" onClick={handleHit}>
-              HIT
-            </button>
-            <button className="btn shadow-md w-1/3">STAND</button>
-          </>
+          <PlayingButtons handleHit={handleHit} score={player.score} />
         ) : (
-          <button
-            className="btn shadow-md w-1/3"
-            onClick={firstDraw}
-            disabled={!betting}
-          >
-            Play
-          </button>
+          <PlayButton firstDraw={firstDraw} betting={betting} />
         )}
       </div>
     </div>
