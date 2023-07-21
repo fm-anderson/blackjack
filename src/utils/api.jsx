@@ -29,3 +29,5 @@ export const reshuffleDeck = async (deckId) => {
     console.log(err);
   }
 };
+
+export const cardBack = "https://deckofcardsapi.com/static/img/back.png";

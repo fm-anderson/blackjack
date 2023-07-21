@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { useAtom } from "jotai";
 import BubblePlayer from "./BubblePlayer";
-import { drawCard } from "../utils/api";
+import Card from "./Card";
+import { cardBack, drawCard } from "../utils/api";
 import { randomKey, updateScore } from "../utils/helpers";
 import { bettingAtom, playerAtom } from "../utils/atoms";
 
@@ -56,25 +57,13 @@ function DisplayPlayer() {
         <ul className="flex flex-row gap-2 mx-2">
           {!start && (
             <>
-              <li className="shadow-sm">
-                <img
-                  src="https://deckofcardsapi.com/static/img/back.png"
-                  width={100}
-                />
-              </li>
-              <li className="shadow-sm">
-                <img
-                  src="https://deckofcardsapi.com/static/img/back.png"
-                  width={100}
-                />
-              </li>
+              <Card image={cardBack} />
+              <Card image={cardBack} />
             </>
           )}
 
           {player?.cards?.map((item) => (
-            <li key={randomKey(8)} className="shadow-sm">
-              <img src={item?.image} width={100} />
-            </li>
+            <Card key={randomKey(8)} image={item?.image} />
           ))}
         </ul>
       </div>
