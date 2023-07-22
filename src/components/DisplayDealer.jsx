@@ -13,8 +13,8 @@ function DisplayDealer() {
   const [playDealer] = useAtom(playDealerAtom);
   const [start] = useAtom(startAtom);
 
-  const handleDealerDraw = async () => {
-    const res = await drawCard(deckId, 1);
+  const handleDealerDraw = async (num = 1) => {
+    const res = await drawCard(deckId, num);
     const card = res.cards[0];
 
     setDealer((prevState) => {
@@ -32,15 +32,21 @@ function DisplayDealer() {
   };
 
   useEffect(() => {
+    if (start && dealer.cards.length === 0) {
+      handleDealerDraw(2);
+    }
+  }, [start, dealer.cards]);
+
+  useEffect(() => {
     const newScore = updateScore(dealer.cards);
     setDealer((prevState) => ({ ...prevState, score: newScore }));
   }, [dealer.cards]);
 
   useEffect(() => {
-    if (playDealer && dealer.score < 17 && start) {
+    if (playDealer && dealer.score < 17 && dealer.cards.length > 0) {
       handleDealerDraw();
     }
-  }, [playDealer, dealer.score, start]);
+  }, [playDealer, dealer.score]);
 
   return (
     <div className="md:w-1/3 md:py-20 md:rounded-3xl md:shadow-lg bg-zinc-200">
@@ -57,14 +63,14 @@ function DisplayDealer() {
           {start && !playDealer && (
             <>
               <Card image={cardBack} />
-              {dealer.cards.length > 0 && (
-                <Card key={0} image={dealer.cards[0].image} />
+              {dealer?.cards?.length > 0 && (
+                <Card key={0} image={dealer?.cards[0]?.image} />
               )}
             </>
           )}
 
           {playDealer &&
-            dealer.cards.map((card, index) => (
+            dealer?.cards?.map((card, index) => (
               <Card key={index} image={card.image} />
             ))}
         </ul>

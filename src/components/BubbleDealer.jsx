@@ -1,4 +1,9 @@
+import { useAtom } from "jotai";
+import { dealerAtom } from "../utils/atoms";
+
 function BubbleDealer() {
+  const [dealer, setDealer] = useAtom(dealerAtom);
+
   return (
     <div className="flex justify-end pt-3 mr-4">
       <div className="chat chat-end w-1/3">
@@ -7,7 +12,7 @@ function BubbleDealer() {
         </div>
       </div>
       <div className="btn btn-circle pointer-events-none shadow-md">
-        <p className="text-3xl">0</p>
+        <p className="text-3xl">{dealer.score}</p>
       </div>
     </div>
   );
