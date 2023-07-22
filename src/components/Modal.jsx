@@ -1,11 +1,21 @@
 import { useLoaderData } from "react-router-dom";
 import { reshuffleDeck } from "../utils/api";
+import { playerAtom, dealerAtom, betAtom, resultAtom } from "../utils/atoms";
+import { useAtom } from "jotai";
 
 function Modal() {
   const { deckId } = useLoaderData();
+  const [result, setResult] = useAtom(resultAtom);
+  const [, setPlayer] = useAtom(playerAtom);
+  const [, setDealer] = useAtom(dealerAtom);
+  const [, setBet] = useAtom(betAtom);
 
   const handleRestart = async () => {
     const reshuffled = await reshuffleDeck(deckId);
+    setPlayer({ cards: [], score: 0 });
+    setDealer({ cards: [], score: 0 });
+    setBet(0);
+    setResult(null);
     console.log(reshuffled);
     return reshuffled;
   };
@@ -18,7 +28,12 @@ function Modal() {
       </label> */}
 
       {/* Put this part before </body> tag */}
-      <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+      <input
+        type="checkbox"
+        id="my_modal_6"
+        className="modal-toggle"
+        // checked={result}
+      />
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Hello!</h3>

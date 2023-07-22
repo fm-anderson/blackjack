@@ -11,7 +11,7 @@ function DisplayDealer() {
   const { deckId } = useLoaderData();
   const [dealer, setDealer] = useAtom(dealerAtom);
   const [playDealer] = useAtom(playDealerAtom);
-  const [start] = useAtom(startAtom);
+  const [start, setStart] = useAtom(startAtom);
 
   const handleDealerDraw = async (num = 1) => {
     const res = await drawCard(deckId, num);
@@ -49,7 +49,7 @@ function DisplayDealer() {
   }, [playDealer, dealer.score]);
 
   return (
-    <div className="md:w-1/3 md:py-20 md:rounded-3xl md:shadow-lg bg-zinc-200">
+    <div className="md:w-1/3 md:py-20 md:rounded-3xl md:shadow-lg bg-gradient-to-r from-[#308834] to-[#1A4A1C]">
       <BubbleDealer />
       <div className="flex justify-center py-10">
         <ul className="flex flex-row gap-2 mx-2">

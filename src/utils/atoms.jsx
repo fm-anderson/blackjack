@@ -6,3 +6,4 @@ export const betAtom = atom(0);
 export const bettingAtom = atom(false);
 export const playDealerAtom = atom(false);
 export const startAtom = atom(false);
+export const resultAtom = atom(null);

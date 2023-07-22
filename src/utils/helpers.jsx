@@ -42,3 +42,18 @@ export const updateScore = (cards) => {
   }
   return score;
 };
+
+export const calculateWinner = (playerScore, dealerScore) => {
+  switch (true) {
+    case playerScore > 21:
+      return "Dealer wins!";
+    case dealerScore > 21:
+      return "Player wins!";
+    case playerScore > dealerScore:
+      return "Player wins!";
+    case playerScore < dealerScore:
+      return "Dealer wins!";
+    default:
+      return "It's a draw!";
+  }
+};

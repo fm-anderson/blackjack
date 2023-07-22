@@ -4,11 +4,13 @@ import { useAtom } from "jotai";
 import BubblePlayer from "./BubblePlayer";
 import Card from "./Card";
 import { cardBack, drawCard } from "../utils/api";
-import { randomKey, updateScore } from "../utils/helpers";
+import { calculateWinner, randomKey, updateScore } from "../utils/helpers";
 import {
   bettingAtom,
+  dealerAtom,
   playDealerAtom,
   playerAtom,
+  resultAtom,
   startAtom,
 } from "../utils/atoms";
 import PlayButton from "./PlayButton";
@@ -18,8 +20,10 @@ function DisplayPlayer() {
   const { deckId } = useLoaderData();
   const [start, setStart] = useAtom(startAtom);
   const [player, setPlayer] = useAtom(playerAtom);
+  const [dealer, setDealer] = useAtom(dealerAtom);
   const [betting, setBetting] = useAtom(bettingAtom);
   const [playDealer, setPlayDealer] = useAtom(playDealerAtom);
+  const [result, setResult] = useAtom(resultAtom);
 
   const firstDraw = async () => {
     const res = await drawCard(deckId, 2);
@@ -59,7 +63,7 @@ function DisplayPlayer() {
   }, [player.cards]);
 
   return (
-    <div className="md:w-1/3 md:py-20 md:rounded-3xl md:shadow-lg bg-zinc-300">
+    <div className="md:w-1/3 md:py-20 md:rounded-3xl md:shadow-lg bg-gradient-to-r from-[#1A4A1C] to-[#308834]">
       <BubblePlayer />
       <div className="flex justify-center py-10">
         <ul className="flex flex-row gap-2 mx-2">
@@ -82,6 +86,7 @@ function DisplayPlayer() {
             handleHit={handleHit}
             score={player.score}
             setPlayDealer={setPlayDealer}
+            setResult={setResult}
           />
         ) : (
           <PlayButton firstDraw={firstDraw} betting={betting} />
