@@ -1,6 +1,6 @@
 import React from "react";
 
-function PlayingButtons({ handleHit, score }) {
+function PlayingButtons({ handleHit, score, setPlayDealer }) {
   return (
     <>
       {score < 21 && (
@@ -8,7 +8,12 @@ function PlayingButtons({ handleHit, score }) {
           <button className="btn shadow-md w-1/3" onClick={handleHit}>
             Hit
           </button>
-          <button className="btn shadow-md w-1/3">Stand</button>
+          <button
+            className="btn shadow-md w-1/3"
+            onClick={() => setPlayDealer(true)}
+          >
+            Stand
+          </button>
         </>
       )}
       {score > 21 && (

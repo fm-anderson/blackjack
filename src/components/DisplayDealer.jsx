@@ -2,13 +2,16 @@ import { useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import { useAtom } from "jotai";
 import BubbleDealer from "./BubbleDealer";
-import { drawCard } from "../utils/api";
+import { cardBack, drawCard } from "../utils/api";
 import { updateScore } from "../utils/helpers";
-import { dealerAtom } from "../utils/atoms";
+import { dealerAtom, playDealerAtom, startAtom } from "../utils/atoms";
+import Card from "./Card";
 
 function DisplayDealer() {
   const { deckId } = useLoaderData();
   const [dealer, setDealer] = useAtom(dealerAtom);
+  const [playDealer] = useAtom(playDealerAtom);
+  const [start] = useAtom(startAtom);
 
   const handleDealerDraw = async () => {
     const res = await drawCard(deckId, 1);
@@ -33,23 +36,37 @@ function DisplayDealer() {
     setDealer((prevState) => ({ ...prevState, score: newScore }));
   }, [dealer.cards]);
 
+  useEffect(() => {
+    if (playDealer && dealer.score < 17 && start) {
+      handleDealerDraw();
+    }
+  }, [playDealer, dealer.score, start]);
+
   return (
     <div className="md:w-1/3 md:py-20 md:rounded-3xl md:shadow-lg bg-zinc-200">
       <BubbleDealer />
       <div className="flex justify-center py-10">
         <ul className="flex flex-row gap-2 mx-2">
-          <li className="shadow-sm">
-            <img
-              src="https://deckofcardsapi.com/static/img/back.png"
-              width={100}
-            />
-          </li>
-          <li className="shadow-sm">
-            <img
-              src="https://deckofcardsapi.com/static/img/back.png"
-              width={100}
-            />
-          </li>
+          {!start && (
+            <>
+              <Card image={cardBack} />
+              <Card image={cardBack} />
+            </>
+          )}
+
+          {start && !playDealer && (
+            <>
+              <Card image={cardBack} />
+              {dealer.cards.length > 0 && (
+                <Card key={0} image={dealer.cards[0].image} />
+              )}
+            </>
+          )}
+
+          {playDealer &&
+            dealer.cards.map((card, index) => (
+              <Card key={index} image={card.image} />
+            ))}
         </ul>
       </div>
 

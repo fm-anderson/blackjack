@@ -5,15 +5,21 @@ import BubblePlayer from "./BubblePlayer";
 import Card from "./Card";
 import { cardBack, drawCard } from "../utils/api";
 import { randomKey, updateScore } from "../utils/helpers";
-import { bettingAtom, playerAtom } from "../utils/atoms";
+import {
+  bettingAtom,
+  playDealerAtom,
+  playerAtom,
+  startAtom,
+} from "../utils/atoms";
 import PlayButton from "./PlayButton";
 import PlayingButtons from "./PlayingButtons";
 
 function DisplayPlayer() {
   const { deckId } = useLoaderData();
-  const [start, setStart] = useState(false);
+  const [start, setStart] = useAtom(startAtom);
   const [player, setPlayer] = useAtom(playerAtom);
   const [betting, setBetting] = useAtom(bettingAtom);
+  const [playDealer, setPlayDealer] = useAtom(playDealerAtom);
 
   const firstDraw = async () => {
     const res = await drawCard(deckId, 2);
@@ -72,7 +78,11 @@ function DisplayPlayer() {
 
       <div className="flex justify-center gap-4 pb-5">
         {start ? (
-          <PlayingButtons handleHit={handleHit} score={player.score} />
+          <PlayingButtons
+            handleHit={handleHit}
+            score={player.score}
+            setPlayDealer={setPlayDealer}
+          />
         ) : (
           <PlayButton firstDraw={firstDraw} betting={betting} />
         )}
